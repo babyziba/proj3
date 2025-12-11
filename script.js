@@ -4,81 +4,81 @@ console.log("Status Manager Started");
 // Global variable for Task 10
 let intervalId = null;
 
-// Select main elements once (used in multiple tasks)
+// Grab all needed elements
 const mainTitle = document.getElementById("main-title");
 const toggleButton = document.getElementById("toggle-button");
 const statusOutput = document.getElementById("status-output");
 const timerButton = document.getElementById("timer-button");
 const controlPanel = document.getElementById("control-panel");
 
-/* ======================================= */
-/* Task 3: Modify Content on Load          */
-/* ======================================= */
+/* ================================
+   Task 3: Modify Content on Load
+================================ */
 mainTitle.innerHTML = "DOM Project: Ready!";
 
-/* ======================================= */
-/* Task 4: Manipulate Attributes           */
-/* ======================================= */
+/* ================================
+   Task 4: Manipulate Attributes
+================================ */
 toggleButton.setAttribute("data-action", "status-toggle");
 
-/* ======================================= */
-/* Task 8: Dynamic Element Creation        */
-/* ======================================= */
+/* ================================
+   Task 8: Dynamic Element Creation
+================================ */
 function createTimestamp() {
-  // create a new <span>
   const span = document.createElement("span");
-  // set its innerHTML to the current time
   span.innerHTML = " " + new Date().toLocaleTimeString();
-  // append to the status-output div
   statusOutput.appendChild(span);
 }
 
-/* ======================================= */
-/* Tasks 5, 6, 7 & 8: Toggle Functionality */
-/* ======================================= */
+/* ================================
+   Tasks 5, 6, 7, 8: Toggle Function
+================================ */
 function toggleStatus(e) {
-  // Task 6: prevent default anchor behavior
+  // Task 6: stop the link from jumping
   e.preventDefault();
 
-  // Task 5: toggle the "hidden" class on the status div
+  // Task 5: show/hide the status div
   statusOutput.classList.toggle("hidden");
 
-  // Check if status is visible (does NOT have .hidden)
+  // Check visibility (no .hidden means visible)
   const isVisible = !statusOutput.classList.contains("hidden");
 
-  // Task 7: change title background when visible/hidden
+  // Task 7 + 8
   if (isVisible) {
+    // yellow background when visible
     mainTitle.style.backgroundColor = "yellow";
-    // Task 8: add a timestamp whenever status becomes visible
+    // add a timestamp each time it becomes visible
     createTimestamp();
   } else {
+    // reset background when hidden
     mainTitle.style.backgroundColor = "";
   }
 }
 
-// Bind the click event to the toggle button
+// Run toggleStatus when the link is clicked
 toggleButton.addEventListener("click", toggleStatus);
 
-/* ======================================= */
-/* Task 9: Loop and Apply Changes          */
-/* ======================================= */
+/* ================================
+   Task 9: Loops and Node Lists
+================================ */
 function highlightListItems() {
+  // grab all <li> in the list
   const items = document.querySelectorAll("#item-list li");
 
-  // you can use either a for loop or forEach; here’s a simple for loop
+  // make them all blue
   for (let i = 0; i < items.length; i++) {
     items[i].style.color = "blue";
   }
 }
 
-// run once on page load
+// run once when the page loads
 highlightListItems();
 
-/* ======================================= */
-/* Task 10: The Flashing Timer             */
-/* ======================================= */
+/* ================================
+   Task 10: The Flashing Timer
+================================ */
 function startFlashing() {
-  // avoid starting multiple intervals
+  // don't start another interval if one is already running
   if (intervalId !== null) {
     return;
   }
@@ -93,11 +93,13 @@ function stopFlashing() {
     clearInterval(intervalId);
     intervalId = null;
   }
-  // make sure panel is visible after stopping
+
+  // make sure the panel is visible after stopping
   controlPanel.classList.remove("hidden");
 }
 
-// click starts flashing
+// click = start flashing
 timerButton.addEventListener("click", startFlashing);
-// double-click stops flashing
+
+// double-click = stop flashing
 timerButton.addEventListener("dblclick", stopFlashing);
